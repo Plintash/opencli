@@ -13,6 +13,7 @@ import type { IPage } from '../../types.js';
 
 const BOSS_DOMAIN = 'www.zhipin.com';
 const CHAT_URL = `https://${BOSS_DOMAIN}/web/chat/index`;
+const GEEK_CHAT_URL = `https://${BOSS_DOMAIN}/web/geek/chat`;
 const COOKIE_EXPIRED_CODES = new Set([7, 37]);
 const COOKIE_EXPIRED_MSG = 'Cookie 已过期！请在当前 Chrome 浏览器中重新登录 BOSS 直聘。';
 const DEFAULT_TIMEOUT = 15_000;
@@ -52,6 +53,15 @@ export function requirePage(page: IPage | null): asserts page is IPage {
  */
 export async function navigateToChat(page: IPage, waitSeconds = 2): Promise<void> {
   await page.goto(CHAT_URL);
+  await page.wait({ time: waitSeconds });
+}
+
+/**
+ * Navigate to the job-seeker chat page and wait for it to settle.
+ * This establishes the cookie context for geek-side chat APIs.
+ */
+export async function navigateToGeekChat(page: IPage, waitSeconds = 2): Promise<void> {
+  await page.goto(GEEK_CHAT_URL);
   await page.wait({ time: waitSeconds });
 }
 
@@ -147,6 +157,19 @@ export async function fetchFriendList(
   const url = `https://${BOSS_DOMAIN}/wapi/zprelation/friend/getBossFriendListV2.json?page=${pageNum}&status=0&jobId=${jobId}`;
   const data = await bossFetch(page, url);
   return data.zpData?.friendList || [];
+}
+
+/**
+ * Fetch the job-seeker friend (chat) list.
+ */
+export async function fetchGeekFriendList(
+  page: IPage,
+  opts: { pageNum?: number } = {},
+): Promise<any[]> {
+  const pageNum = opts.pageNum ?? 1;
+  const url = `https://${BOSS_DOMAIN}/wapi/zprelation/friend/getGeekFriendList.json?page=${pageNum}`;
+  const data = await bossFetch(page, url);
+  return data.zpData?.result || data.zpData?.friendList || [];
 }
 
 /**
