@@ -138,8 +138,13 @@ opencli boss joblist --limit 10          # 职位列表
 opencli boss greet --security-id xxx     # 打招呼
 opencli boss batchgreet --job-id xxx     # 批量打招呼
 opencli boss send --uid xxx "消息内容"    # 发消息 (text positional)
-opencli boss chatlist --limit 10         # 聊天列表
-opencli boss chatmsg --security-id xxx   # 聊天记录
+opencli boss chatlist --limit 10         # 招聘端聊天列表
+opencli boss chatmsg <uid>               # 招聘端聊天记录
+opencli boss inbox --limit 10            # 求职端聊天列表
+opencli boss inbox --unread-only         # 只看未读会话
+opencli boss inbox --keyword Node.js     # 按公司/岗位/消息内容筛选
+opencli boss thread <uid>                # 求职端完整聊天记录
+opencli boss thread <uid> --raw -f json  # 含原始消息 payload
 opencli boss invite --security-id xxx    # 邀请沟通
 opencli boss mark --security-id xxx      # 标记管理
 opencli boss exchange --security-id xxx  # 交换联系方式

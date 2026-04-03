@@ -74,7 +74,7 @@ Usage: `opencli <site> <command> [args] [--limit N] [-f json|yaml|md|csv|table]`
 | **weibo** | `hot` `search` `feed` `user` `me` `post` `comments` |
 | **douyin** | `profile` `videos` `user-videos` `activities` `collections` `hashtag` `location` `stats` `publish` `draft` `drafts` `delete` `update` |
 | **bluesky** | `search` `profile` `user` `feeds` `followers` `following` `thread` `trending` `starter-packs` |
-| **boss** | `search` `detail` `recommend` `joblist` `greet` `batchgreet` `send` `chatlist` `chatmsg` `invite` `mark` `exchange` `resume` `stats` |
+| **boss** | `search` `detail` `recommend` `joblist` `greet` `batchgreet` `send` `chatlist` `chatmsg` `inbox` `thread` `invite` `mark` `exchange` `resume` `stats` |
 | **douban** | `search` `top250` `subject` `photos` `download` `marks` `reviews` `movie-hot` `book-hot` |
 | **pixiv** | `ranking` `search` `user` `illusts` `detail` `download` |
 | **jike** | `feed` `search` `create` `like` `comment` `repost` `notifications` `post` `topic` `user` |

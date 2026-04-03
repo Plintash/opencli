@@ -27,6 +27,8 @@ cli({
   args: [
     { name: 'page', type: 'int', default: 1, help: 'Page number' },
     { name: 'limit', type: 'int', default: 20, help: 'Number of results' },
+    { name: 'unread-only', type: 'boolean', default: false, help: 'Only show chats with unread messages' },
+    { name: 'keyword', help: 'Filter by boss name, company, job, or last message' },
   ],
   columns: ['boss_name', 'company', 'job', 'last_msg', 'last_time', 'unread', 'uid', 'security_id', 'encrypt_job_id'],
   func: async (page, kwargs) => {
@@ -37,6 +39,22 @@ cli({
       pageNum: kwargs.page || 1,
     });
 
-    return friends.slice(0, kwargs.limit || 20).map(normalizeGeekFriend);
+    const keyword = String(kwargs.keyword || '').trim().toLowerCase();
+    const unreadOnly = Boolean(kwargs['unread-only']);
+
+    const rows = friends
+      .map(normalizeGeekFriend)
+      .filter((row) => !unreadOnly || Number(row.unread || 0) > 0)
+      .filter((row) => {
+        if (!keyword) return true;
+        return [
+          row.boss_name,
+          row.company,
+          row.job,
+          row.last_msg,
+        ].some((value) => String(value || '').toLowerCase().includes(keyword));
+      });
+
+    return rows.slice(0, kwargs.limit || 20);
   },
 });
