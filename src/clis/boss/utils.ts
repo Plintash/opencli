@@ -173,6 +173,29 @@ export async function fetchGeekFriendList(
 }
 
 /**
+ * Find a job-seeker chat friend by encrypted boss UID.
+ * Returns null if not found.
+ */
+export async function findGeekFriendByUid(
+  page: IPage,
+  encryptUid: string,
+  opts: { maxPages?: number } = {},
+): Promise<any | null> {
+  const maxPages = opts.maxPages ?? 1;
+
+  for (let p = 1; p <= maxPages; p++) {
+    const friends = await fetchGeekFriendList(page, { pageNum: p });
+    const found = friends.find((f: any) =>
+      f.encryptBossId === encryptUid || f.encryptUid === encryptUid,
+    );
+    if (found) return found;
+    if (friends.length === 0) break;
+  }
+
+  return null;
+}
+
+/**
  * Fetch the recommended candidates (greetRecSortList).
  */
 export async function fetchRecommendList(page: IPage): Promise<any[]> {

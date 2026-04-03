@@ -17,7 +17,8 @@ function normalizeGeekFriend(item: any) {
 
 cli({
   site: 'boss',
-  name: 'geekchatlist',
+  name: 'inbox',
+  aliases: ['geekchatlist'],
   description: 'BOSS直聘查看聊天列表（求职端）',
   domain: 'www.zhipin.com',
   strategy: Strategy.COOKIE,
